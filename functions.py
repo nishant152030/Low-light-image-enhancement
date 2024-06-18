@@ -9,6 +9,8 @@ import tensorflow as tf
 from tensorflow import keras
 from tensorflow.keras import layers
 
+IMAGE_SIZE = 256
+BATCH_SIZE = 16
 #To load and generate data
 def load(image_path):
     image = tf.io.read_file(image_path)
@@ -20,7 +22,7 @@ def load(image_path):
 
 def generator(low_light_images):
     dataset = tf.data.Dataset.from_tensor_slices((low_light_images))
-    dataset = dataset.map(load_data, num_parallel_calls=tf.data.AUTOTUNE)
+    dataset = dataset.map(load, num_parallel_calls=tf.data.AUTOTUNE)
     dataset = dataset.batch(BATCH_SIZE, drop_remainder=True)
     return dataset
 
